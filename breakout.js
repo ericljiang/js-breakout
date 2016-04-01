@@ -17,7 +17,13 @@ class Ball {
     if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) {
       this.dx = -this.dx;
     }
-    if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) {
+    if (this.y - this.radius < 0) {
+      this.dy = -this.dy;
+    }
+  }
+
+  collideWith(p) {
+    if (this.x >= p.x - p.width / 2 && this.x <= p.x + p.width / 2 && this.y + this.radius > canvas.height - p.height) {
       this.dy = -this.dy;
     }
   }
@@ -100,6 +106,7 @@ function loop() {
 function update() {
   ball.update();
   paddle.update();
+  ball.collideWith(paddle);
 }
 
 function draw() {
