@@ -37,6 +37,18 @@ class Paddle {
     this.height = 10;
     this.x = canvas.width / 2;
     this.y = 0;
+    this.leftPressed = false;
+    this.rightPressed = false;
+    this.speed = 4;
+  }
+
+  update() {
+    if (this.leftPressed) {
+      this.x -= this.speed;
+    }
+    if (this.rightPressed) {
+      this.x += this.speed;
+    }
   }
 
   draw() {
@@ -46,10 +58,37 @@ class Paddle {
     context.fill();
     context.closePath();
   }
+
+  handleKeyDown(e) {
+    if (e.keyCode == 39) {
+        this.rightPressed = true;
+    } else if (e.keyCode == 37) {
+        this.leftPressed = true;
+    }
+  }
+
+  handleKeyUp(e) {
+    if (e.keyCode == 39) {
+        this.rightPressed = false;
+    } else if (e.keyCode == 37) {
+        this.leftPressed = false;
+    }
+  }
 }
 
 ball = new Ball();
 paddle = new Paddle();
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+function keyDownHandler(e) {
+  paddle.handleKeyDown(e);
+}
+
+function keyUpHandler(e) {
+  paddle.handleKeyUp(e);
+}
 
 setInterval(loop, 6);
 
@@ -60,6 +99,7 @@ function loop() {
 
 function update() {
   ball.update();
+  paddle.update();
 }
 
 function draw() {
