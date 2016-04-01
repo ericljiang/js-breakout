@@ -31,7 +31,25 @@ class Ball {
   }
 }
 
+class Paddle {
+  constructor() {
+    this.width = 50;
+    this.height = 10;
+    this.x = canvas.width / 2;
+    this.y = 0;
+  }
+
+  draw() {
+    context.beginPath();
+    context.rect(this.x - this.width / 2, canvas.height - this.height, this.width, this.height);
+    context.fillStyle = "#0095DD";
+    context.fill();
+    context.closePath();
+  }
+}
+
 ball = new Ball();
+paddle = new Paddle();
 
 setInterval(loop, 6);
 
@@ -47,4 +65,5 @@ function update() {
 function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   ball.draw();
+  paddle.draw();
 }
